@@ -48,26 +48,27 @@ services:
     links:
       - db:mysql
   phpmyadmin:
-          links:
-              - db
-          image: phpmyadmin/phpmyadmin
-          container_name: ${settings.slug}_pma
-          ports:
-              - 8081:80
-          restart: on-failure:5
-          environment:
-              PMA_HOST: db
+    links:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: ${settings.slug}_pma
+    ports:
+      - 8081:80
+    restart: on-failure:5
+    environment:
+      PMA_HOST: db
   wordmove:
-          tty: true
-          links:
-              - wp
-              - db
-          image: welaika/wordmove
-          restart: on-failure:5
-          container_name: ${settings.slug}_wordmove
-          working_dir: /var/www/html
-          volumes:
-              - ./www:/var/www/html
-              - ./src:/var/www/src
-              - ~/.ssh:/root/.ssh
+    build: 
+      context: .
+      dockerfile: provision/wordmove/Dockerfile
+    container_name: ${settings.slug}_wordmove
+    tty: true
+    links:
+      - wp
+      - db
+    restart: on-failure:5
+    volumes:
+      - ./www:/var/www/html
+      - ./src:/var/www/src
+      - ~/.ssh:/root/.ssh
 `;

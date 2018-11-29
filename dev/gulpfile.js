@@ -25,12 +25,13 @@ var gulp = require('gulp'),
 	postcssSimpleVars = require('postcss-simple-vars'),
 	posthtml = require('gulp-posthtml'),
     sass = require('gulp-sass'),
-	stylelint = require('stylelint'),
 	tap = require('gulp-tap'),
 	uglify = require('gulp-uglify'),
 	webpackStream = require('webpack-stream'),
 	webpack = require('webpack'),
 	yaml = require('js-yaml');
+
+var argv = require('yargs').argv;
 
 // Load project settings
 var packageData;
@@ -112,10 +113,9 @@ var dest = {
 
 // Plugin options
 var options = {
-	uglify: {mangle: false},
-	imagemin: {optimizationLevel: 7, progressive: true, interlaced: true, multipass: true},
+	uglify: { mangle: false },
+	imagemin: { optimizationLevel: 7, progressive: true, interlaced: true, multipass: true },
 	postcss: [
-		stylelint(),
 		postcssImport,
 		postcssMixins,
 		postcssEach,
@@ -219,21 +219,23 @@ function styles() {
 
 // Scripts (JS): get third-party dependencies, concatenate all scripts into one file, save full and minified versions, then copy
 function scripts(done) {
-	return gulp.src(glob.scriptMain)
-		.pipe(jshint({ esversion: 6 }))
-		.pipe(jshint.reporter())
-		.pipe(webpackStream(require('./webpack.config'), webpack)
-			.on('error', function(error) { this.emit('end'); })
-		)
-		.pipe(sourcemaps.init({loadMaps: true}))
-		.pipe(gulp.dest(base.theme + dest.scripts))
-		.pipe(browserSync.stream())
-		.pipe(uglify(options.uglify))
-		.pipe(rename('main.min.js'))
-		.pipe(sourcemaps.write('.'))
-		.pipe(changed(base.theme + dest.scripts))
-		.pipe(gulp.dest(base.theme + dest.scripts))
-		.pipe(browserSync.stream());
+    const environment = (argv.production === undefined) ? 'development':'production';
+
+    return gulp.src(glob.scriptMain)
+        .pipe(jshint({ esversion: 6 }))
+        .pipe(jshint.reporter())
+        .pipe(webpackStream(require('./webpack.config')(environment), webpack)
+            .on('error', function(error) { this.emit('end'); })
+        )
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(gulp.dest(base.theme + dest.scripts))
+        .pipe(browserSync.stream())
+        // .pipe(uglify(options.uglify))
+        // .pipe(rename('main.min.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(changed(base.theme + dest.scripts))
+        .pipe(gulp.dest(base.theme + dest.scripts))
+        .pipe(browserSync.stream());
 }
 
 // Images: optimise and copy, maintaining tree

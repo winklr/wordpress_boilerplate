@@ -1,0 +1,10 @@
+<div class="container text-block {{ content.custom_class }} {{ layout }}">
+    <div class="row">
+        <div class="col">
+            {% if content.headline is not empty %}
+                <h3 class="headline mb-0">{{ content.headline }}</h3>
+            {% endif %}
+            <div class="{{ content.headline ? 'mt-2' }}">{{ content.text }}</div>
+        </div>
+    </div>
+</div>
