@@ -258,7 +258,7 @@ let installWordPress = (webPort, settings) => {
 			wp(`option update ${option} "${value}"`);
 		}
 		// Default post
-		wp(`post update 1 --post_name='welcome-to-WP_Boilerplate' --post_title='Welcome to WP_Boilerplate' --post_content='WP_Boilerplate is based in Fabrica Dev Kit (FDK). For more information about developing with Fabrica Dev Kit, <a href="https://github.com/fabrica-wp/fabrica-dev-kit">see the documentation</a>.'`);
+		wp(`post update 1 --post_name='welcome-to-WP_Boilerplate' --post_title='Welcome to WP_Boilerplate' --post_content='WP_Boilerplate is based on Fabrica Dev Kit (FDK). For more information about developing with Fabrica Dev Kit, <a href="https://github.com/fabrica-wp/fabrica-dev-kit">see the documentation</a>.'`);
 
 		// the site will be ready to run and develop locally
 		echo('Setup complete. To develop locally, run \'wp_boilerplate run\'.');

@@ -3,7 +3,7 @@ module.exports = (settings) => `
 ${settings.title}
 
 ## Requirements + dependencies
-Fabrica Dev Kit is compatible with recent versions of Mac OS X. It has a few dependencies:
+wordpress boilerplate is compatible with recent versions of Mac OS X. It has a few dependencies:
 
 1. **Docker** – download and run the installer by following the link for Mac OS X from the [Docker downloads page](https://docs.docker.com/docker-for-mac/) (Stable channel is fine).
 1. **Node.js** – download and run the installer by following the link to the Recommended Version from the [Node.js homepage](https://nodejs.org/en/).
