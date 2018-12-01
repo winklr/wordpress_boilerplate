@@ -20,8 +20,9 @@ wp:
   rewrite_structure: /%postname%/ # dev site permalink structure (can be changed later)
   # acf_pro_key: # optional (if set will preinstall Advanced Custom Fields Pro)
   plugins: # optional (installs plugins at setup - use URL slugs from WP plugins directory)
-  # - advanced-custom-fields
-  # - force-regenerate-thumbnails
+    - advanced-custom-fields
+    - force-regenerate-thumbnails
+    - debug-bar
 
 # Google Analytics - optional (will preset tracking code in theme, can be added manually later)
 # google_analytics_id:

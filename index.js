@@ -144,7 +144,8 @@ let createFolders = settings => {
 			'src/includes/composer.json',
 			'src/includes/project.php',
 			'src/templates/views/base.twig',
-			'docker-compose.yml'
+			'docker-compose.yml',
+			'README.md'
 		];
 		for (let destFilename of templateFilenames) {
 			// load template file and generate final version
