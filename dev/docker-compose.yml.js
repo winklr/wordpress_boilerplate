@@ -18,7 +18,7 @@ services:
     image: mysql:5.7
     container_name: ${settings.slug}_db
     volumes:
-      - ./db:/var/lib/mysql
+      - database:/var/lib/mysql
     restart: on-failure:5
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
@@ -71,4 +71,7 @@ services:
       - ./www:/var/www/html
       - ./src:/var/www/src
       - ~/.ssh:/root/.ssh
+
+volumes:
+  database:
 `;
