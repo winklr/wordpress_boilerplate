@@ -12,6 +12,7 @@ const update = () => {
 
         objectPath.set(composer, 'services.wp.build.args.UID', uid);
         objectPath.set(composer, 'services.wp.build.args.GID', gid);
+        objectPath.set(composer, 'services.composer.user', `${uid}:${gid}`);
 
         const composerYaml = yaml.safeDump(composer);
         sh.ShellString(composerYaml).to(`${process.cwd()}/docker-compose.yml`);

@@ -40,6 +40,7 @@ services:
       - ./www:/var/www/html
       - ./src:/var/www/src
       - ./provision/wp/zz-php.ini:/usr/local/etc/php/conf.d/zz-php.ini
+      - './dbDump:/dbDump'
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: wordpress
@@ -57,6 +58,13 @@ services:
     restart: on-failure:5
     environment:
       PMA_HOST: db
+  composer:
+    image: composer
+    container_name: ${settings.slug}_composer
+    user: ${settings.user.uid}:${settings.user.gid}
+    command: install --ignore-platform-reqs
+    volumes:
+    - ./src/includes:/app/
   wordmove:
     build: 
       context: .
@@ -71,7 +79,6 @@ services:
       - ./www:/var/www/html
       - ./src:/var/www/src
       - ~/.ssh:/root/.ssh
-
 volumes:
   database:
 `;

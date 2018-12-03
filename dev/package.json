@@ -17,7 +17,13 @@
     "logs": "docker-compose logs -f --tail='46' wp | sed -e \"s/ WARNING: .* into stderr: \\\"\\(NOTICE: PHP message: \\)\\{0,1\\}\\(\\[[a-zA-Z0-9 :\\-]\\{1,\\}\\]\\)\\{0,1\\} \\{0,1\\}\\(.*\\)\\\"/ ⚠️  $(tput setaf 3)\\3$(tput sgr0)/\"",
     "remove": "docker-compose down --volumes --rmi local",
     "wordmove": "docker-compose exec wordmove /bin/bash",
-    "compose": "node ./scripts/dockerCompose.js"
+    "compose": "node ./scripts/dockerCompose.js",
+    "composer": "docker-compose exec -u www-data composer",
+    "init": "node ./scripts/init.js",
+    "dbbackup": "node ./scripts/dbBackup.js",
+    "dbimport": "node ./scripts/dbImport.js",
+    "dbimport:latest": "node ./scripts/dbImport.js -- latest",
+    "dbimport:default": "node ./scripts/dbImport.js -- default"
   },
   "fabrica_dev_kit": {
     "scripts_info": {
@@ -28,7 +34,14 @@
       "wp": "Run WP Cli. eg. 'wp_boilerplate wp option list' or 'wp_boilerplate wp -- --info'",
       "logs": "Tail WP container logs.",
       "remove": "Stop all project containers, remove their volumes and WP project image.",
-      "wordmove": "Run wordmove command to push/pull data from/to remote wordpress instances"
+      "wordmove": "Run wordmove command to push/pull data from/to remote wordpress instances",
+      "compose": "Update docker-compose.yml with current user's id and group",
+      "composer": "Run composer (PHP package manager)",
+      "init": "Initialize project after cloning of repository",
+      "dbbackup": "dump db backup to dbDump folder",
+      "dbimport": "import specific db dump file (not supported yet)",
+      "dbimport:latest": "import latest db dump from dbDump folder",
+      "dbimport:default": "import default db dump from dbDump folder (initialDump.sql)"
     }
   },
   "devDependencies": {
@@ -59,6 +72,7 @@
     "gulp-uglify": "^3.0.1",
     "jshint": "^2.9.6",
     "js-yaml": "^3.12.0",
+    "lodash": "^4.17.11",
     "merge-stream": "^1.0.1",
     "path": "^0.12.7",
     "object-path": "^0.11.4",

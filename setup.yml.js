@@ -23,6 +23,7 @@ wp:
     - advanced-custom-fields
     - force-regenerate-thumbnails
     - debug-bar
+    - debug-bar-timber
 
 # Google Analytics - optional (will preset tracking code in theme, can be added manually later)
 # google_analytics_id:

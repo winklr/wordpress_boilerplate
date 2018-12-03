@@ -56,19 +56,19 @@ let wait = (message, callback, delay) => {
 // check WP_Boilerplate dependencies
 let dependencies = ['gulp', 'docker-compose', 'composer'];
 for (let dependency of dependencies) {
-	if (sh.exec(`hash ${dependency} 2>/dev/null`, {silent: true}).code != 0) {
+	if (sh.exec(`hash ${dependency} 2>/dev/null`, {silent: true}).code !== 0) {
 		halt(`Could not find dependency '${dependency}'.`);
 	}
 }
 let packageManager = '';
 dependencies = ['yarn', 'npm'];
 for (let dependency of dependencies) {
-	if (sh.exec(`hash ${dependency} 2>/dev/null`, {silent: true}).code == 0) {
+	if (sh.exec(`hash ${dependency} 2>/dev/null`, {silent: true}).code === 0) {
 		packageManager = dependency;
 		break;
 	}
 }
-if (packageManager == '') {
+if (packageManager === '') {
 	halt('Could not find any Node package manager (\'yarn\' or \'npm\').');
 }
 
@@ -193,7 +193,7 @@ let installWordPress = (webPort, settings) => {
 	echo('Installing WordPress...');
 	let dockerCmd = 'docker-compose exec -u www-data wp',
 		wp = command => {
-			if (sh.exec(`${dockerCmd} wp ${command}`).code != 0) {
+			if (sh.exec(`${dockerCmd} wp ${command}`).code !== 0) {
 				halt(`Failed to execute: '${dockerCmd} wp ${command}'`);
 			}
 		};
@@ -219,7 +219,7 @@ let installWordPress = (webPort, settings) => {
 
 		// WordPress installed succesfully: proceed with configuration
 		wp(`rewrite structure "${settings.wp.rewrite_structure}"`);
-		if (settings.wp.lang == 'ja') {
+		if (settings.wp.lang === 'ja') {
 			// activate multibyte patch for Japanese language
 			wp('plugin activate wp-multibyte-patch');
 		}
@@ -228,7 +228,7 @@ let installWordPress = (webPort, settings) => {
 		echo('Building WordPress theme...');
 		// `shelljs.exec` doesn't handle color and animations yet
 		// https://github.com/shelljs/shelljs/issues/86
-		if (spawn('gulp', ['build'], { stdio: 'inherit' }).status != 0) {
+		if (spawn('gulp', ['build'], { stdio: 'inherit' }).status !== 0) {
 			halt('Gulp \'build\' task failed');
 		}
 		// create symlink to theme folder for quick access
@@ -263,12 +263,30 @@ let installWordPress = (webPort, settings) => {
 		// the site will be ready to run and develop locally
 		echo('Setup complete. To develop locally, run \'wp_boilerplate run\'.');
 	});
-}
+};
+
+const createDatabaseDump = (settings) => {
+    const containerName = `${settings.slug}_wp`;
+
+    let dockerCmd = 'docker-compose exec -T -u www-data wp wp';
+
+	// check, if wp container is running
+    if(sh.exec(`docker inspect -f {{.State.Running}} ${containerName}`, { silent: true}).code !== 0) {
+        dockerCmd = `docker-compose run --rm wp wp --allow-root`
+    }
+
+    const wp = command => {
+        if (sh.exec(`${dockerCmd} ${command}`).code !== 0) {
+            halt(`Failed to execute: '${dockerCmd} ${command}'`);
+        }
+    };
+    wp('db export /dbDump/initialDump.sql');
+};
 
 // start Docker containers and wait for them to be up to start installing and configuring WP
 let startContainersAndInstall = settings => {
 	echo('Bringing Docker containers up...');
-	if (sh.exec('docker-compose up -d').code != 0) {
+	if (sh.exec('docker-compose up -d').code !== 0) {
 		halt('Docker containers provision failed.');
 	}
 
@@ -310,7 +328,7 @@ let startContainersAndInstall = settings => {
 	}).catch(error => {
 		halt(`Error installing or configuring WordPress:\n${error}`);
 	});
-}
+};
 
 // Commands
 
@@ -351,6 +369,7 @@ let setup = options => {
 	createFolders(settings);
 	installDependencies();
 	startContainersAndInstall(settings);
+	createDatabaseDump(settings);
 };
 
 // add commands for project's root `package.json` if current path is part of a project
@@ -362,7 +381,7 @@ let addScriptCommands = () => {
 	if (!sh.test('-f', `${rootDir}/docker-compose.yml`) || !sh.test('-f', `${rootDir}/package.json`)) {
 		return;
 	}
-	if (rootDir != process.cwd()) {
+	if (rootDir !== process.cwd()) {
 		// change to project root folder and add `package.json` scripts to commands
 		sh.cd(rootDir);
 		echo(`Working directory changed to ${rootDir}`);
