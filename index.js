@@ -54,7 +54,7 @@ let wait = (message, callback, delay) => {
 };
 
 // check WP_Boilerplate dependencies
-let dependencies = ['gulp', 'docker-compose', 'composer'];
+let dependencies = ['gulp', 'docker-compose'];
 for (let dependency of dependencies) {
 	if (sh.exec(`hash ${dependency} 2>/dev/null`, {silent: true}).code !== 0) {
 		halt(`Could not find dependency '${dependency}'.`);
@@ -325,6 +325,7 @@ let startContainersAndInstall = settings => {
 		// set WordPress folder owner
 		sh.exec('docker-compose exec wp sh -c "chown -R www-data:www-data ."');
 		installWordPress(webPort, settings);
+        createDatabaseDump(settings);
 	}).catch(error => {
 		halt(`Error installing or configuring WordPress:\n${error}`);
 	});
@@ -369,7 +370,6 @@ let setup = options => {
 	createFolders(settings);
 	installDependencies();
 	startContainersAndInstall(settings);
-	createDatabaseDump(settings);
 };
 
 // add commands for project's root `package.json` if current path is part of a project

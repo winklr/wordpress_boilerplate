@@ -61,7 +61,7 @@ services:
   composer:
     image: composer
     container_name: ${settings.slug}_composer
-    user: ${settings.user.uid}:${settings.user.gid}
+    user: '${settings.user.uid}:${settings.user.gid}'
     command: install --ignore-platform-reqs
     volumes:
     - ./src/includes:/app/
