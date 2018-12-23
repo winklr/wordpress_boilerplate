@@ -1,5 +1,25 @@
 <?php
+/**
+ * The template for displaying all pages.
+ *
+ * This is the template that displays all pages by default.
+ * Please note that this is the WordPress construct of pages
+ * and that other 'pages' on your WordPress site will use a
+ * different template.
+ *
+ * To generate specific templates for your pages you can use:
+ * /src/templates/views/page-mypage.twig
+ * (which will still route through this PHP file)
+ * OR
+ * /src/templates/controller/page-mypage.php
+ * (in which case you'll want to duplicate this file and save to the above path)
+ *
+ */
 
 $data = \Timber\Timber::get_context();
-$data['post'] = new \Timber\Post();
-\Timber\Timber::render('page.twig', $data);
+$post = new \Timber\Post();
+$data['post'] = $post;
+\Timber\Timber::render(array(
+  'page-' . $post->post_name . '.twig',
+  'page.twig'
+), $data);

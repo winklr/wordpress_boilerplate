@@ -278,7 +278,7 @@ function wordmove(cb) {
     try {
         var wordmove = yaml.safeLoad(fs.readFileSync('./config/wordmove.yml', 'utf8')) || {};
         wordmove.local = wordmove.local || {};
-        wordmove.local.vhost = `localhost:${settings.webPort}`;
+        wordmove.local.vhost = `http://localhost:${settings.webPort}`;
         wordmove.local.wordpress_path = '/var/www/html';
         wordmove.local.database = wordmove.local.database || {};
         wordmove.local.database.name = 'wordpress';

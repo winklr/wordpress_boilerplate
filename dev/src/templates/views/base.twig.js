@@ -12,11 +12,13 @@ module.exports = (settings) => `
 
 <body class="{{ body_class }}">
 	
-	<header class="page-header">
+	{{ include('common/_mainnav.twig') }}
+	
+	<div class="page-header">
         {% block header -%}
 
         {% endblock -%}
-    </header>
+    </div>
 
 	{% block content -%}
 
