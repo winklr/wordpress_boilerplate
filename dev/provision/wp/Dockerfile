@@ -21,7 +21,7 @@ RUN apt-get -qq -o=Dpkg::Use-Pty=0 install -y sendmail > /dev/null 2>&1
 RUN apt-get install -y mysql-client
 
 # Install git
-RUN apt-get install -y git
+# RUN apt-get install -y git
 
 # Cleanup
 RUN apt-get clean
