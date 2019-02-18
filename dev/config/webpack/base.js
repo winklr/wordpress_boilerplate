@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 
-module.exports = function() {
+module.exports = function(env) {
     const opts = {
         entry: {
             main: './src/assets/js/main.js'

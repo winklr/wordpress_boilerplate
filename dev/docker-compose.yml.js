@@ -12,7 +12,7 @@ services:
       - ./provision/web/global:/etc/nginx/global
     ports:
       - "80"
-    links:
+    depends_on:
       - wp
   db:
     image: mysql:5.7
@@ -27,6 +27,10 @@ services:
       MYSQL_PASSWORD: wordpress
     ports:
       - "3306"
+    networks:
+      default:
+        aliases:
+          - mysql
   wp:
     build:
       context: .
@@ -46,10 +50,10 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_PREFIX: ${settings.db.prefix}
       WORDPRESS_DEBUG: "true"
-    links:
-      - db:mysql
+    depends_on:
+      - db
   phpmyadmin:
-    links:
+    depends_on:
       - db
     image: phpmyadmin/phpmyadmin
     container_name: ${settings.slug}_pma
@@ -71,7 +75,7 @@ services:
       dockerfile: provision/wordmove/Dockerfile
     container_name: ${settings.slug}_wordmove
     tty: true
-    links:
+    depends_on:
       - wp
       - db
     restart: on-failure:5

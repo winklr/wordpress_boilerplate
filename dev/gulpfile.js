@@ -23,10 +23,11 @@ var gulp = require('gulp'),
 	postcssNestedProps = require('postcss-nested-props'),
 	postcssReporter = require('postcss-reporter'),
 	postcssSimpleVars = require('postcss-simple-vars'),
+    postcssUrl = require('postcss-url'),
 	posthtml = require('gulp-posthtml'),
     sass = require('gulp-sass'),
 	tap = require('gulp-tap'),
-	uglify = require('gulp-uglify'),
+    tildeImporter = require('node-sass-tilde-importer'),
 	webpackStream = require('webpack-stream'),
 	webpack = require('webpack'),
 	yaml = require('js-yaml');
@@ -128,7 +129,10 @@ var options = {
 		postcssNested,
 		postcssFontpath,
 		postcssReporter({clearMessages: true}),
-		autoprefixer({browsers: ['last 3 versions']})
+		autoprefixer({browsers: ['last 3 versions']}),
+        postcssUrl({
+            url: 'inline'
+        })
 	]
 };
 
@@ -196,9 +200,11 @@ function views() {
 // Styles (CSS): lint, concatenate into one file, write source map, preprocess, save full and minified versions, then copy
 function styles() {
 	return gulp.src(glob.styleMain)
-		.pipe(sass().on('error', function(err) {
-			log.error(err.message)
-		}))
+        .pipe(sass({
+            importer: tildeImporter
+        }).on('error', function(err) {
+            log.error(err.message)
+        }))
 		.pipe(postcss(options.postcss)
 			.on('error', function(error) {
 				console.error(error.message);
@@ -230,8 +236,6 @@ function scripts(done) {
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(gulp.dest(base.theme + dest.scripts))
         .pipe(browserSync.stream())
-        // .pipe(uglify(options.uglify))
-        // .pipe(rename('main.min.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(changed(base.theme + dest.scripts))
         .pipe(gulp.dest(base.theme + dest.scripts))

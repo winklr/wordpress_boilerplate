@@ -2,16 +2,13 @@
 A development environment and build toolkit to accelerate and optimize every stage of the WordPress development process. For custom theme (or plugin) developers, especially those with complex CMS-type requirements. Its main features are:
 
 * Instant setup of project-specific fast local development server (using [Docker](https://www.docker.com/))
-* Tools for coding leaner, cleaner themes (using Twig, PostCSS, MVC and BEM)
+* Tools for coding leaner, cleaner themes (using Twig, PostCSS, MVC)
 * Build script to preprocess, lint and optimize assets
 * Live browser testing, synchronized across devices (using Browsersync)
 * Version control for custom fields (using ACF-JSON)
 * Instant deployment (using Wordmove)
 
-## Changelog
-
-**2.0**
-* Fabrica Dev Kit is now installed globally via `npm`, rather than cloned for each project, and accessible as `fdk` shell command – see below for instructions. Also includes options for plugin development and easier Wordmove configuration. Ruby is no longer a dependency.
+* WP_Boilerplate is now installed globally via `npm`, rather than cloned for each project, and accessible as `fdk` shell command – see below for instructions. Also includes options for plugin development and easier Wordmove configuration. Ruby is no longer a dependency.
 
 ## All features
 
@@ -23,9 +20,6 @@ A development environment and build toolkit to accelerate and optimize every sta
 
 ### Allows you to write cleaner, more logical and more beautiful code (if you want to)...
 * ... with templates written in [Twig](http://twig.sensiolabs.org/) rather than directly in PHP. Installs the revolutionary [Timber](https://upstatement.com/timber/) to bring MVC-like separation of concerns to WordPress development, separating data processing and analytical logic from presentation, allowing you to write more elegant, legible and maintainable templates, eradicating `<?php` `?>` tag-itis forever. A genuine 'never go back' improvement. See the MVC section in code examples below for more.
-* ... with [BEM syntax](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/). Uses the [PostHTML-bem](https://github.com/rajdee/posthtml-bem/) plugin for [PostHTML](https://github.com/posthtml/posthtml) which allows you to write much less repetitive BEM markup (see code examples below), and which in turn reflects your (Post)CSS structure more closely.
-* ... with [PostCSS](https://github.com/postcss/postcss) for variables, mixins and other CSS preprocessing enhancements (it can compile your SASS or LESS code no problem).
-* ... with the [LostGrid](https://github.com/peterramsing/lost) grid system / preprocessor, which allows you to build fluid, responsive, nested grids without using presentational classes, with or without [Flexbox](https://github.com/peterramsing/lost).
 * ... making use of the fantastic [Advanced Custom Fields](https://www.advancedcustomfields.com/) plugin, which is deeply supported by Timber (see above). Fabrica Dev Kit can automatically install ACF Pro if you supply your licence key at setup.
 
 ### Reduces friction in the development process
@@ -111,7 +105,7 @@ File paths in this section refer to the `src/`.
 * If you don't or can't use Timber, just create your vanilla WordPress templates in `templates/controllers/` as you usually would and they'll work fine.
 
 ### Assets
-* CSS goes in `assets/css/main.pcss` (automatically included in the front-end). If you prefer to split it into several files, you can include the additional files with `@import` at the top. Vanilla CSS works fine but any PostCSS is processed automatically (see below).
+* CSS goes in `assets/css/main.scss` (automatically included in the front-end). If you prefer to split it into several files, you can include the additional files with `@import` at the top. Vanilla CSS works fine but any PostCSS is processed automatically (see below).
 * Javascript / jQuery code goes in `assets/js/main.js` (automatically included in the front-end), or additional JS files can be enqueued in the standard WordPress way by [hooking](https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts) `wp_enqueue_scripts` according to where you want the assets to load (most likely in `includes/front.php` – see next section).
 * Images can go in `assets/img/` and any local fonts in `assets/fonts/`. These can be referenced from the stylesheet via `../img/` or `../fonts/`.
 
@@ -202,151 +196,3 @@ The additional information will be automatically available to the template, as l
 ```
 
 Note how here we access `post.allMeasurements` directly, without needing the call to `post.get_field()` in Twig (which is normally essential to receive full ACF Repeater data), since we have already made that call when mapping the new property in `models.php`.
-
-### BEM with PostHTML-bem + PostCSS
-The BEM methodology provides a conceptual framework which makes it easy to build blocks (groups of design and content elements) to be reused across a site without having to worry about either duplicated or conflicting rules. The methodology is simple but promotes logical, disciplined thinking and efficient, modular code. You can read more about the principles of BEM online, for example on [CSS Wizardry](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/).
-
-The inclusion of PostHTML, PostCSS, and specific plugins for these, in Fabrica Dev Kit make the process of actually writing BEM markup and styles quicker, easier and less error-prone.
-
-As an example, let's take some vanilla BEM markup and styles. We're using `__` notation for elements and `--` notation for modifiers. (If you prefer an alternative notation, you can configure it in `gulpfile.js` by modifying the `posthtmlBem` property of the `options` hash.)
-
-#### Before...
-
-First, the HTML:
-
-```
-<div class="measurements">
-	<div class="measurement__entry measurement__entry--highlight">
-		<span class="measurements__label">Width</span>:
-		<span class="measurements__number">55</span>
-		<span class="measurements__unit">cm</span>
-	</div>
-	<div class="measurement__entry">
-		<span class="measurements__label">Length</span>:
-		<span class="measurements__number">10</span>
-		<span class="measurements__unit">m</span>
-	</div>
-</div>
-```
-
-Second, some corresponding CSS (fairly basic, but targets several of the member elements):
-
-```
-.measurements {
-	font-family: monospace;
-}
-.measurements__entry--highlight {
-	color: #f00;
-}
-.measurements__label {
-	color: #777;
-}
-.measurements__number {
-	font-weight: bold;
-}
-.measurements__unit {
-	color: #aaa;
-}
-```
-
-#### ...and after:
-
-With PostHTML-bem + PostCSS we can avoid repetition in both places, which makes the code easier to write, easier to read, and less prone to typos. Here are the equivalent versions:
-
-First, the markup: note how we use the attributes `block`, `elem` and `mod` instead of classes, but these are automatically rendered as classes, so that the following compiles identically to the HTML above.
-
-```
-<div block="measurements">
-	<div elem="entry" mods="highlight">
-		<span elem="label">Width</span>:
-		<span elem="number">55</span>
-		<span elem="unit">cm</span>
-	</div>
-	<div elem="entry">
-		<span elem="label">Length</span>:
-		<span elem="number">10</span>
-		<span elem="unit">m</span>
-	</div>
-</div>
-```
-
-Second, the PostCSS, where we can make use of the `&` token both to nest elements within their containing block, and without repeating the block name, so that the following compiles to the CSS above.
-
-```
-.measurements {
-	font-family: monospace;
-
-	&__entry { /* Element */
-		&--highlight { /* Modifier of the element */
-			color: #f00;
-		}
-	}
-
-	&__label {
-		color: #777;
-	}
-
-	&__number {
-		font-weight: bold;
-	}
-
-	&__unit {
-		color: #aaa;
-	}
-}
-```
-
-### Semantic grids with LostGrid
-
-The following markup is representative of how many layout frameworks implement a responsive design:
-
-```
-<div class="row">
-	<div class="col-xs-12 col-sm-6 col-md-8">wide cell</div>
-	<div class="col-xs-6 col-md-4">normal cell</div>
-</div>
-<div class="row">
-	<div class="col-xs-6 col-sm-4">normal cell</div>
-	<div class="col-xs-6 col-sm-4">normal cell</div>
-	<div class="col-xs-6 col-sm-4">normal cell</div>
-</div>
-```
-
-The multiple classes are to specify size / styles at different breakpoints via media queries, but they make the code bloated and hard to read – and the CSS rules to target all the options across all the different breakpoints are hundreds of lines long. And none of the styles are semantic...
-
-With LostGrid (a PostCSS plugin included with Fabrica Dev Kit), we can move all the presentational rules where they belong – in our stylesheet – and make our classes semantic. We'll also make use of PostHTML-bem syntax for maximum conciseness (see above). Here's a quick example for comparison:
-
-```
-<div block="row">
-	<div elem="cell" mods="featured">wide cell</div>
-	<div elem="cell">normal cell</div>
-</div>
-<div block="row">
-	<div elem="cell">normal cell</div>
-	<div elem="cell">normal cell</div>
-	<div elem="cell">normal cell</div>
-</div>
-```
-
-And our CSS will look something like this:
-
-```
-.row {
-	lost-flex-container: row;
-
-	&__cell {
-		@media (max-width: 540px) {
-			lost-column: 1;
-		}
-		@media (min-width: 541px) {
-			lost-column: 1/3 3;
-		}
-
-		&--featured {
-			lost-column: 2/3 2;
-		}
-	}
-}
-```
-
-For more information about the power and flexibility of LostGrid see its [website and documentation](http://lostgrid.org/).

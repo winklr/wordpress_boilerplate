@@ -27,8 +27,17 @@ class Base extends Singleton {
 		// Menus
 		add_action('init', array($this, 'registerMenus'));
 		add_filter('timber_context', array($this, 'exposeMenus'));
+
+		//Twig extensions
+		add_filter('timber/twig', array($this, 'addToTwig'));
 	}
 
+    // Extend twig
+    public function addToTwig($twig) {
+        // Enable internationalization extension
+        //$twig->addExtension(new \Twig_Extensions_Extension_Intl());
+        return $twig;
+    }
 	// Register front-end scripts
 	public function enqueueScripts() {
 

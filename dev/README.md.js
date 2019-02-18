@@ -65,10 +65,10 @@ Wordpress theme development is done using the following tools:
 
 
 ## Syncing with staging / production server
+1. _optional:_ stop docker container, if running with __docker-compose down__
+1. _optional:_ run __docker-compose build wordmove__ to get latest docker image
 1. launch docker container with __docker-compose up -d__
 1. run __gulp build__ to compile local changes into wordpress folder
-1. run __npm wordmove__ to connect to wordmove docker container
-1. run __wordmove help__ or __wordmove help push__
-1. to push theme to staging server run __wordmove push -t -e staging__ 
-1. run __exit__ to exit container
+1. run __npm run wordmove:push__ to transfer theme files to remove server
+1. run __npm run wordmove:pull__ to get uploads, plugins and database from remove server
 `;
