@@ -92,7 +92,7 @@ var glob = {
 	includes: base.src + 'includes/**/*',
 	controllers: base.src + 'templates/controllers/**/*.php',
 	views: base.src + 'templates/views/**/*.twig',
-	styles: base.src + 'assets/css/**/*.{css,pcss}',
+	styles: base.src + 'assets/css/**/*.scss',
 	scripts: base.src + 'assets/js/**/*.js',
 	images: base.src + 'assets/img/**/*',
 	fonts: base.src + 'assets/fonts/**/*',
