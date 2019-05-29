@@ -18,12 +18,12 @@ wp:
   admin:
     user: admin
     pass: admin
-    email: admin@example.com
+    email: moin@werk85.de
 
   # Default Plugins
   # Plugin's slug or url to the plugin's slug.
   plugins:
-  # - advanced-custom-fields
+    - advanced-custom-fields
 
   # Skip WP CLI default themes and plugins install
   skip_default_plugins: true
