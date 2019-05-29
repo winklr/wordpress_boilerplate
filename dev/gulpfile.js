@@ -226,6 +226,7 @@ function styles() {
 // Scripts (JS): get third-party dependencies, concatenate all scripts into one file, save full and minified versions, then copy
 function scripts(done) {
     const environment = (argv.production === undefined) ? 'development':'production';
+    console.log('Running in ' + environment + ' mode');
 
     return gulp.src(glob.scriptMain)
         .pipe(jshint({ esversion: 6 }))

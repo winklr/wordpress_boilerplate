@@ -74,7 +74,7 @@ if (packageManager === '') {
 
 // load all settings files
 let loadSettings = (reinstall) => {
-	reinstall = reinstall || false
+	reinstall = reinstall || false;
 	echo('Reading settings...');
 	let settings = {};
 	// auxiliar method to get settings from the files
@@ -87,13 +87,13 @@ let loadSettings = (reinstall) => {
 			halt(`Failed to open settings file: ${filename}.\nException: ${ex}`);
 		}
 		merge(settings, newSettings);
-	}
+	};
 
 	// get user's UID/GID to match on container's user
 	settings.user = {
 		uid: sh.exec('id -u $(whoami)', {silent: true}).stdout.trim(),
 		gid: sh.exec('id -g $(whoami)', {silent: true}).stdout.trim(),
-	}
+	};
 
 	// load default, user and project/site settings, in that order
 	mergeSettings(`${__dirname}/default.yml`);
@@ -250,7 +250,7 @@ let installWordPress = (webPort, settings) => {
 			wp(`plugin delete "hello" "akismet"`);
 		}
 		if (settings.wp.skip_default_themes) {
-			wp(`theme delete "twentyseventeen" "twentysixteen" "twentyfifteen"`);
+			wp(`theme delete "twentynineteen" "twentyeighteen" "twentyseventeen" "twentysixteen" "twentyfifteen"`);
 		}
 		// WordPress options
 		for (let option of Object.keys(settings.wp.options || {})) {

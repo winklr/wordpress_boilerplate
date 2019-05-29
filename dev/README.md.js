@@ -69,6 +69,6 @@ Wordpress theme development is done using the following tools:
 1. _optional:_ run __docker-compose build wordmove__ to get latest docker image
 1. launch docker container with __docker-compose up -d__
 1. run __gulp build__ to compile local changes into wordpress folder
-1. run __npm run wordmove:push__ to transfer theme files to remove server
-1. run __npm run wordmove:pull__ to get uploads, plugins and database from remove server
+1. run __npm run wordmove:push__ to transfer theme files to remote server
+1. run __npm run wordmove:pull__ to get uploads, plugins and database from remote server
 `;

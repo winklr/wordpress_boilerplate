@@ -1,6 +1,6 @@
 {
   "name": "wordpress_boilerplate",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Based on Fabrica Dev Kit for Wordpress",
   "main": "index.js",
   "scripts": {
