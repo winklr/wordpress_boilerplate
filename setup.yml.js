@@ -18,7 +18,7 @@ wp:
     email: ${data.wp_admin_email || 'moin@werk85.de'}
   lang: de_DE # dev site WP locale/language
   rewrite_structure: /%postname%/ # dev site permalink structure (can be changed later)
-  acf_pro_key: b3JkZXJfaWQ9MTMxMDk2fHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE4LTA1LTExIDE5OjEzOjEy # optional (if set will preinstall Advanced Custom Fields Pro)
+  acf_pro_key: b3JkZXJfaWQ9MTQ5MTAyfHR5cGU9cGVyc29uYWx8ZGF0ZT0yMDE5LTAxLTA3IDE2OjA1OjM0 # optional (if set will preinstall Advanced Custom Fields Pro)
   plugins: # optional (installs plugins at setup - use URL slugs from WP plugins directory)
     - advanced-custom-fields
     - force-regenerate-thumbnails
