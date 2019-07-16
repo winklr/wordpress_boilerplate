@@ -1,0 +1,29 @@
+{% if content.id %}
+    <a class="anchor" id="{{ content.id }}"></a>
+{% endif %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="row py-5 mag-content justify-content-center">
+                <div class="col-md-{{ 12 / content.column_count ?? 1 }}">
+                    <p class="font-weight-bold">
+                        {{ content.title_column_left }}
+                    </p>
+                    <p>
+                        {{ content.text_column_left }}
+                    </p>
+                </div>
+                {% if content.column_count == 2 %}
+                    <div class="col-md-6">
+                        <p class="font-weight-bold">
+                            {{ content.title_column_right }}
+                        </p>
+                        <p>
+                            {{ content.text_column_right }}
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,8 +31,8 @@ module.exports = function (env) {
                             ie8: false,
                             keep_fnames: true
                         },
+                        warnings: false,
                         compress: {
-                            warnings: false,
                             ie8: false
                         },
                         comments: false

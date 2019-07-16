@@ -1,10 +1,44 @@
-<div class="container text-block {{ content.custom_class }} {{ layout }}">
-    <div class="row">
-        <div class="col">
-            {% if content.headline is not empty %}
-                <h3 class="headline mb-0">{{ content.headline }}</h3>
-            {% endif %}
-            <div class="{{ content.headline ? 'mt-2' }}">{{ content.text }}</div>
+{% if content.id %}
+    <a class="anchor" id="{{ content.id }}"></a>
+{% endif %}
+<div class="{{ content.highlight ? 'bg-light' }} my-5 py-5">
+    <div class="container-fluid">
+        <div class="row justify-content-center mag-content">
+            <div class="col-lg-8">
+                <h2>
+                    {% if content.headline %}
+                        {{ content.headline }}
+                    {% endif %}
+
+                    {% if content.headline and content.subheadline %}<br>{% endif %}
+
+                    {% if content.subheadline %}
+                        <small>{{ content.subheadline }}</small>
+                    {% endif %}
+                </h2>
+                {% block text_block_extra_content %}
+                {% endblock %}
+                <div class="row">
+                    <div class="col-md-{{ 12 / content.column_count ?? 1 }}">
+                        <p class="font-weight-bold">
+                            {{ content.title_column_left }}
+                        </p>
+                        <p>
+                            {{ content.text_column_left }}
+                        </p>
+                    </div>
+                    {% if content.column_count == 2 %}
+                        <div class="col-md-6">
+                            <p class="font-weight-bold">
+                                {{ content.title_column_right }}
+                            </p>
+                            <p>
+                                {{ content.text_column_right }}
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,13 +1,9 @@
 {% extends "base.twig" %}
 
-{% block header %}
-    {{ include('nav_main.twig') }}
-{% endblock %}
-
 {% block content %}
 	<div class="main-wrapper">
 		<h1>{{ post.title }}</h1>
 		{{ post.content }}
-        {% include 'acf_layouts.twig' %}
+		{{ include('acf_layouts.twig', { flexcontent: post.meta('content') }) }}
 	</div>
 {% endblock %}

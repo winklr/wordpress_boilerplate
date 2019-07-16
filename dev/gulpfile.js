@@ -235,8 +235,6 @@ function scripts(done) {
             .on('error', function(error) { this.emit('end'); })
         )
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(gulp.dest(base.theme + dest.scripts))
-        .pipe(browserSync.stream())
         .pipe(sourcemaps.write('.'))
         .pipe(changed(base.theme + dest.scripts))
         .pipe(gulp.dest(base.theme + dest.scripts))

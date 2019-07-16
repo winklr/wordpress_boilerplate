@@ -45,7 +45,7 @@ class Base extends Singleton {
 		if (WP_DEBUG === true) {
 			$suffix = '';
 		} else {
-			$suffix = '.min';
+			$suffix = '';
 		}
 
 		// Load third-party libraries and project code

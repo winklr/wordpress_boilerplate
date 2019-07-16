@@ -28,7 +28,10 @@ class Project extends Singleton {
 	public static $varsTag = '${settings.slug}_script_vars';
 
 	// Menus required
-	public static $menus = array('main' => 'Main menu');
+	public static $menus = array(
+	'main' => 'Main menu',
+	'footer' => 'Footer menu',
+	);
 
 	// Google Analytics ID (injected by Base class)
 	public static $googleAnalyticsId = '${settings.google_analytics_id || ''}';

@@ -1,5 +1,17 @@
-{% for content in post.get_field('content') %}
+{% for content in flexcontent %}
     {% if content.acf_fc_layout == 'text_block' %}
-        {{ include('partials/text_block.twig') }}
+        {{ include('partials/_text_block.twig') }}
+    {% endif %}
+    {% if content.acf_fc_layout == 'latest_posts' %}
+        {{ include('partials/_latest_posts.twig') }}
+    {% endif %}
+    {% if content.acf_fc_layout == 'posts_matrix' %}
+        {{ include('partials/_posts_matrix.twig') }}
+    {% endif %}
+    {% if content.acf_fc_layout == 'text_columns' %}
+        {{ include('partials/_text_columns.twig') }}
+    {% endif %}
+    {% if content.acf_fc_layout == '2_col_text_img' %}
+        {{ include('partials/_2_col_text_img.twig') }}
     {% endif %}
 {% endfor %}

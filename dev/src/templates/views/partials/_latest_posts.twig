@@ -1,0 +1,31 @@
+{% if content.id %}
+    <a class="anchor" id="{{ content.id }}"></a>
+{% endif %}
+{% if latest_posts is not empty %}
+    <div class="bg-light">
+        <div class="container-fluid py-5">
+            <h2 class="text-center mb-5">{{ content.headline }}</h2>
+            {% for posts_group in latest_posts[content.post_type] %}
+                <div class="row">
+                    {% for post in posts_group %}
+                        <div class="col-{{ 12 / posts_group|length }}">
+                            <a href="{{ post.link }}" class="magazine-preview">
+                                <img src="{{ post.thumbnail }}" class="w-100">
+                                <div class="label">
+                                    <div class="category text-uppercase font-weight-bold">{{ post.terms|column('name')|first }}</div>
+                                    <div class="title">
+                                        <h3 class="mb-1">{{ post.title }}</h3>
+                                        <h4 class="h5 m-0">{{ post.subtitle }}</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="d-flex justify-content-center mt-5">
+                <a href="{{ content.button_link.url }}" class="btn btn-dark font-weight-bold text-uppercase text-white">{{ content.button_link.title }}</a>
+            </div>
+        </div>
+    </div>
+{% endif %}

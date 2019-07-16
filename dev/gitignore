@@ -10,3 +10,5 @@ src/node_modules/
 _resources/
 .DS_Store
 .idea
+.tmp/
+dist/

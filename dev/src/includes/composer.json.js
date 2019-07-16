@@ -8,7 +8,8 @@ module.exports = (settings) => {
 	"require": {
 		"timber/timber":"1.*",
 		"Upstatement/routes": "*",
-		"twig/extensions": "^1.5"
+		"twig/extensions": "^1.5",
+		"symbioticwp/acf-field-post-type-selector": "1.0.0-p"
 	}
 }
 `};

@@ -1,0 +1,20 @@
+{% if content.id %}
+<a class="anchor" id="{{ content.id }}"></a>
+{% endif %}
+<div class="container-fluid">
+    <div class="row justify-content-center mag-content">
+        <div class="col-lg-8">
+            <div class="row py-5 mag-content">
+                <div class="col-md-6 {{ content.img_position == 'right' ? 'order-1' }}">
+                    <div class="image">
+                        <img src="{{ TimberImage(content.image).src }}" class="w-100">
+                        <div class="caption">{{ content.img_caption }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6 {{ content.img_position == 'right' ? 'order-0' }}">
+                    {{ content.text }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
