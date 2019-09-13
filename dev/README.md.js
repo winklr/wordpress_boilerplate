@@ -60,7 +60,7 @@ Wordpress theme development is done using the following tools:
 * [Tutorial: Wordpress development with Twig](https://code.tutsplus.com/series/kick-start-wordpress-development-with-twig--cms-974)
 * [Wordpress MVC with ACF and Timber](https://www.xfive.co/blog/mvc-like-wordpress-development-acf-timber/)
 * [GenerateWP - Generate custom post types](https://generatewp.com/)
-* [Tutorial: Custom Post Types and ACF](https://www.sunlime.at/custom-post-types-cpt-und-advanced-custom-fields-acf/)
+* [Tutorial: Custom Post Types and ACF](https://scanwp.net/blog/wordpress-cutom-post-type-acf-tutorial/)
 * [Youtube series: Building Wordpress Websites with ACF and Timber](https://www.youtube.com/watch?v=Cicak-QYow0)
 
 
