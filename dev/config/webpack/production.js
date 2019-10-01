@@ -1,45 +1,12 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const commonConfig = require('./base.js');
 
 module.exports = function (env) {
     return webpackMerge(commonConfig(env), {
         mode: 'production',
-
-        optimization: {
-            runtimeChunk: 'single', // enable 'runtime' chunk
-
-            // splitChunks: {
-            //     cacheGroups: {
-            //         vendors: {
-            //             test: /[\\/]node_modules[\\/]/,
-            //             name: 'vendors',
-            //             enforce: true,
-            //             chunks: 'all'
-            //         }
-            //     }
-            // },
-
-            minimizer: [
-                new UglifyJsPlugin({
-                    sourceMap: true,
-                    uglifyOptions: {
-                        beautify: false,
-                        mangle: {
-                            ie8: false,
-                            keep_fnames: true
-                        },
-                        warnings: false,
-                        compress: {
-                            ie8: false
-                        },
-                        comments: false
-                    }
-                })
-            ]
-        },
 
         performance: {
             hints: false
@@ -54,6 +21,12 @@ module.exports = function (env) {
                 'process.env': {
                     NODE_ENV: JSON.stringify('production')
                 }
+            }),
+            new TerserPlugin({
+                parallel: true,
+                terserOptions: {
+                    ecma: 6,
+                },
             })
         ]
     });

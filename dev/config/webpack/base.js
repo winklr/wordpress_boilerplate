@@ -6,18 +6,28 @@ module.exports = function(env) {
             main: './src/assets/js/main.js'
         },
         output: {
-            filename: '[name].js'
+            filename: '[name].[contenthash:8].js'
+        },
+        optimization: {
+            runtimeChunk: false, // enable 'runtime' chunk
+            splitChunks: {
+                cacheGroups: {
+                    default: false,
+                    commons: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendor',
+                        chunks: 'all',
+                        minChunks: 1
+                    }
+                }
+            }
         },
         module: {
             rules: [
                 {
                     test: /.js$/,
                     exclude: /(node_modules|bower_components)/,
-                    loader: 'babel-loader',
-                    query: {
-                        presets: ['env']
-                    }
-
+                    use: ['babel-loader']
                 }
             ]
         },

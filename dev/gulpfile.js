@@ -131,6 +131,7 @@ var options = {
 		postcssReporter({clearMessages: true}),
 		autoprefixer({browsers: ['last 3 versions']}),
         postcssUrl({
+			ignoreFragmentWarning: true,
             url: 'inline'
         })
 	]
@@ -236,7 +237,6 @@ function scripts(done) {
         )
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sourcemaps.write('.'))
-        .pipe(changed(base.theme + dest.scripts))
         .pipe(gulp.dest(base.theme + dest.scripts))
         .pipe(browserSync.stream());
 }
