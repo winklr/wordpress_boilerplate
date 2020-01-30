@@ -10,7 +10,7 @@ module.exports = (settings) => `
     "jquery": "^3.3.1",
     "bootstrap": "^4.3.1",
     "popper.js": "^1.14.6",
-    "font-awesome": "^4.7.0",
+    "@fortawesome/fontawesome-free": "^5.10.2",
     "js-cookie": "^2.2.0",
     "lightbox2": "^2.9.0"
   },

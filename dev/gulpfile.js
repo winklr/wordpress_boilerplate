@@ -138,11 +138,20 @@ var options = {
 };
 
 // Erase build and theme folders before each compile
-function clean() {
+function clean(done) {
 	return del([base.theme], {force: true})
 		.then(function() {
 			fs.mkdirSync(base.theme);
+			done();
 		});
+}
+
+function cleanScripts(done) {
+	return del(base.theme + dest.scripts)
+		.then(function () {
+			fs.mkdirSync(base.theme + dest.scripts);
+			done();
+		})
 }
 
 // Header: auto-create style.css using project info we already have
@@ -329,7 +338,7 @@ function watch() {
 	gulp.watch(glob.controllers, gulp.series(controllers));
 	gulp.watch(glob.views, gulp.series(views));
 	gulp.watch(glob.styles, gulp.series(styles));
-	gulp.watch(glob.scripts, gulp.series(scripts));
+	gulp.watch(glob.scripts, gulp.series(cleanScripts, scripts));
 	gulp.watch(glob.images, gulp.series(images));
 	gulp.watch(glob.fonts, gulp.series(fonts));
 	settings.imports.plugins.forEach(function(plugin) {
@@ -338,7 +347,7 @@ function watch() {
 }
 
 // Build: sequences all the other tasks
-gulp.task('build', gulp.series(clean, gulp.parallel(header, acf, functions, includes, controllers, views, styles, scripts, images, fonts, imports, wordmove)));
+gulp.task('build', gulp.series(clean, gulp.parallel(header, acf, functions, includes, controllers, views, styles, gulp.series(cleanScripts, scripts), images, fonts, imports, wordmove)));
 
 // Wpconfig: update Docker dynamic ports in Wordpress config
 gulp.task('wpconfig', wpconfig);

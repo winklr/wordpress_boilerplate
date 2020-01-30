@@ -57,6 +57,10 @@ class Project extends Singleton {
           return $twig;
         });
         
+        // Register API endpoints to be cached by wordpress-rest-caching plugin
+        add_filter('wp_rest_cache/allowed_endpoints', array($this, 'wprc_add_rest_endpoints'), 10, 1);
+
+
         add_filter('acf/location/rule_types', array($this, 'acf_location_rule_types'));
         add_filter('acf/location/rule_values/category_terms', array($this, 'acf_location_rule_values_category_terms'));
         add_filter('acf/location/rule_match/category_terms', array($this, 'acf_location_rules_match_category_terms'), 10, 3);
@@ -153,7 +157,42 @@ class Project extends Singleton {
   public function remove_default_meta_box() {
     echo "<style> .term-description-wrap { display:none; } </style>";
   }
+  
+  // return endpoints that will be cached
+  public function wprc_add_rest_endpoints($allowed_endpoints) {
+    $endpoints = [
+      'endpoint1'
+    ];
+    $filterEndpoints = [
+      'filter1',
+      'filter2'
+    ];
 
+    $allowed_endpoints['api/v1'] = $endpoints;
+    $allowed_endpoints['api/v1/filter'] = $filterEndpoints;
+    return $allowed_endpoints;
+  }
+  
+  // Configure custom REST routes
+  add_action('rest_api_init', function () {
+      register_rest_route('api/v1', '/endpoint1', array(
+        'methods' => 'GET',
+        'callback' => array($this, 'getEndpoint1')
+      ));
+      register_rest_route('api/v1', '/filter/filter1', array(
+        'methods' => 'GET',
+        'callback' => array($this, 'getFilter1Filter')
+      ));
+      register_rest_route('api/v1', '/filter/filter2', array(
+        'methods' => 'GET',
+        'callback' => array($this, 'getFilter2Filter')
+      ));      
+    });
+  }
+
+  function getEndPoint1() {}
+  function getFilter1Filter() {}
+  function getFilter2Filter() {}
 }
 
 // Create a singleton instance of Project

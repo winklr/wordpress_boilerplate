@@ -1,4 +1,4 @@
-FROM welaika/wordmove
+FROM siriwan/wordmove
 
 USER root
 
