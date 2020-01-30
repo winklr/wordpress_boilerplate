@@ -9,7 +9,6 @@ var gulp = require('gulp'),
 	mergeStream = require('merge-stream'),
 	fs = require('fs'),
 	imagemin = require('gulp-imagemin'),
-	jshint = require('gulp-jshint'),
 	log = require('fancy-log'),
 	rename = require('gulp-rename'),
 	sourcemaps = require('gulp-sourcemaps'),
@@ -93,11 +92,11 @@ var glob = {
 	controllers: base.src + 'templates/controllers/**/*.php',
 	views: base.src + 'templates/views/**/*.twig',
 	styles: base.src + 'assets/css/**/*.scss',
-	scripts: base.src + 'assets/js/**/*.js',
+	scripts: base.src + 'assets/js/**/*.{js,ts,tsx}',
 	images: base.src + 'assets/img/**/*',
 	fonts: base.src + 'assets/fonts/**/*',
 	styleMain: base.src + 'assets/css/main.scss',
-	scriptMain: base.src + 'assets/js/main.js',
+	scriptMain: base.src + 'assets/js/main.ts',
 };
 
 // Build folder slugs
@@ -235,19 +234,17 @@ function styles() {
 
 // Scripts (JS): get third-party dependencies, concatenate all scripts into one file, save full and minified versions, then copy
 function scripts(done) {
-    const environment = (argv.production === undefined) ? 'development':'production';
-    console.log('Running in ' + environment + ' mode');
+	const environment = (argv.production === undefined) ? 'development' : 'production';
+	console.log('Running in ' + environment + ' mode');
 
-    return gulp.src(glob.scriptMain)
-        .pipe(jshint({ esversion: 6 }))
-        .pipe(jshint.reporter())
-        .pipe(webpackStream(require('./webpack.config')(environment), webpack)
-            .on('error', function(error) { this.emit('end'); })
-        )
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(base.theme + dest.scripts))
-        .pipe(browserSync.stream());
+	return gulp.src(glob.scriptMain)
+		.pipe(webpackStream(require('./webpack.config')(environment), webpack)
+			.on('error', function (error) {
+				this.emit('end');
+			})
+		)
+		.pipe(gulp.dest(base.theme + dest.scripts))
+		.pipe(browserSync.stream());
 }
 
 // Images: optimise and copy, maintaining tree
