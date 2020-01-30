@@ -70,7 +70,7 @@ class Base extends Singleton
         switch ($name) {
 
           case 'main':
-            $deps = array('vendor');
+            $deps = array('vendor', 'wp-api');
             break;
 
           default:

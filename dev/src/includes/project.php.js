@@ -37,18 +37,18 @@ class Project extends Singleton {
 	public static $googleAnalyticsId = '${settings.google_analytics_id || ''}';
 
 	public function init() {
-		add_action('init', array($this, 'registerStructure'));
-		add_filter('acf/fields/flexible_content/layout_title', array($this, 'custom_layout_title'), 10, 4);
-		add_filter('enter_title_here', array($this, 'customTitlePlaceholderText'), 10, 2);
-		
-		// remove default 'content' text area from custom taxonomy 
+        add_action('init', array($this, 'registerStructure'));
+        add_filter('acf/fields/flexible_content/layout_title', array($this, 'custom_layout_title'), 10, 4);
+        add_filter('enter_title_here', array($this, 'customTitlePlaceholderText'), 10, 2);
+        
+        // remove default 'content' text area from custom taxonomy 
         // add_action('$taxonomy$_edit_form', array($this, 'remove_default_meta_box'));
         // add_action('$taxonomy$_add_form', array($this, 'remove_default_meta_box'));
-    
-		// remove comments
+        
+        // remove comments
         add_action('admin_init',array($this, 'disable_comments'));
         add_action('admin_menu',array($this, 'remove_comment_menu'));
-
+        
         // twig functions
         add_filter( 'timber/twig', function( \\Twig_Environment $twig ) {
           $twig->addFunction( new Timber\\Twig_Function( 'YoutubeVideo', function ($url) {
@@ -59,26 +59,41 @@ class Project extends Singleton {
         
         // Register API endpoints to be cached by wordpress-rest-caching plugin
         add_filter('wp_rest_cache/allowed_endpoints', array($this, 'wprc_add_rest_endpoints'), 10, 1);
-
-
+        
+        
         add_filter('acf/location/rule_types', array($this, 'acf_location_rule_types'));
         add_filter('acf/location/rule_values/category_terms', array($this, 'acf_location_rule_values_category_terms'));
         add_filter('acf/location/rule_match/category_terms', array($this, 'acf_location_rules_match_category_terms'), 10, 3);
 
-		// Project-specific tags, hooks and initialisations
-		// add_action('action_name', array($this, 'actionHandler'));
-		// add_filter('filter_name', array($this, 'filterHandler'));
+        // Configure custom REST routes
+        add_action('rest_api_init', function () {
+          register_rest_route('api/v1', '/endpoint1', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'getEndpoint1')
+          ));
+          register_rest_route('api/v1', '/filter/filter1', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'getFilter1Filter')
+          ));
+          register_rest_route('api/v1', '/filter/filter2', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'getFilter2Filter')
+          ));      
+        });
+        // Project-specific tags, hooks and initialisations
+        // add_action('action_name', array($this, 'actionHandler'));
+        // add_filter('filter_name', array($this, 'filterHandler'));
 	}
 	
-		public function acf_location_rule_types( $choices ) {
+    public function acf_location_rule_types( $choices ) {
 
-    $choices['Kategorie']['category_terms'] = 'Kategoriebezeichnung';
+        $choices['Kategorie']['category_terms'] = 'Kategoriebezeichnung';
 
-    return $choices;
+        return $choices;
 
   }
 
-    public function acf_location_rule_values_category_terms( $choices ) {
+   public function acf_location_rule_values_category_terms( $choices ) {
     
     $terms = acf_get_terms(array('taxonomy' => 'category'));
     
@@ -171,23 +186,6 @@ class Project extends Singleton {
     $allowed_endpoints['api/v1'] = $endpoints;
     $allowed_endpoints['api/v1/filter'] = $filterEndpoints;
     return $allowed_endpoints;
-  }
-  
-  // Configure custom REST routes
-  add_action('rest_api_init', function () {
-      register_rest_route('api/v1', '/endpoint1', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'getEndpoint1')
-      ));
-      register_rest_route('api/v1', '/filter/filter1', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'getFilter1Filter')
-      ));
-      register_rest_route('api/v1', '/filter/filter2', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'getFilter2Filter')
-      ));      
-    });
   }
 
   function getEndPoint1() {}
