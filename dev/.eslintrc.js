@@ -9,13 +9,6 @@ module.exports = {
         }
     },
     settings: {
-        'import/resolver': {
-            ts: {
-                directory: 'src'
-            }
-        },
-        'import/ignore': [
-            'uuid'
-        ]
+        'import/resolver': 'webpack'
     }
 };

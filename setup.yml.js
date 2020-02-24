@@ -26,6 +26,9 @@ wp:
     - debug-bar-timber
     - kint-debugger
     - wp-rest-cache
+    - query-monitor
+    - simple-301-redirects
+    - clean-image-filenames
 
 # Google Analytics - optional (will preset tracking code in theme, can be added manually later)
 # google_analytics_id:

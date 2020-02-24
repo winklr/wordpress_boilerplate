@@ -1,16 +1,12 @@
-FROM siriwan/wordmove
+FROM welaika/wordmove:php7
 
-USER root
+ENV WORDMOVE_WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y lftp
 
-COPY provision/wordmove/docker-entrypoint.sh /
+COPY provision/wordmove/lftprc /root/.lftprc
 
-RUN chmod +x /docker-entrypoint.sh
+WORKDIR ${WORDMOVE_WORKDIR}
 
-USER wordmove
+ENTRYPOINT ["wordmove"]
 
-COPY provision/wordmove/lftprc /home/wordmove/.lftprc
-WORKDIR /var/www/html
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD [""]

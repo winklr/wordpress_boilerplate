@@ -13,10 +13,11 @@ wordpress boilerplate is compatible with recent versions of Mac OS X. It has a f
 ## Installation
 
 1. clone into local folder
-1. run __npm install__
-1. run __npm run init__
+1. run __yarn run install__
+1. run __yarn run init__
 1. run __docker-compose up -d__
-1. run __npm run dbimport:default__
+1. (optional) run __yarn dbimport:default__
+1. (if staging is already set up) run __yarn wordmove:pull__
 1. run __gulp__
 1. launch Website
 
@@ -26,12 +27,12 @@ wordpress boilerplate is compatible with recent versions of Mac OS X. It has a f
 * **gulp** to build theme and watch for file changes
 
 #### Database
-* **npm run dbimport:latest** import latest db dump from folder _dbDump_
-* **npm run dbimport:default** import default db dump (_initialDump.sql_) from folder _dbDump_
-* **npm run dbbackup** save db dump to folder _dbDump_
+* **yarn dbimport:latest** import latest db dump from folder _dbDump_
+* **yarn dbimport:default** import default db dump (_initialDump.sql_) from folder _dbDump_
+* **yarn dbbackup** save db dump to folder _dbDump_
 
 #### Composer
-* **npm run composer** Install new php packages
+* **yarn composer** Install new php packages
 
 #### docker-compose
 * **npm run compose** update docker-compose.yml with current user id and group (needed for file/folder permissions). Run this command after each *git clone*, *git pull*, *git checkout*
@@ -44,8 +45,8 @@ _user_: demo \\
 _pass_: password
 
 Wordpress theme / plugin development is done in *src* folder. \\
-Run __npm install --save__ in *src* folder to add additional libraries. \\
-Include them in *assets/js/main.js* or via webpack by editing __webpack.config.js__ \\
+Run __yarn add__ in *src* folder to add additional libraries. \\
+Include them in *assets/js/main.ts* or via webpack by editing __webpack.config.js__ \\
 
 Wordpress theme development is done using the following tools:
 
