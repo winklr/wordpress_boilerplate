@@ -29,6 +29,7 @@ wp:
     - query-monitor
     - simple-301-redirects
     - clean-image-filenames
+    - acf-extended
 
 # Google Analytics - optional (will preset tracking code in theme, can be added manually later)
 # google_analytics_id:

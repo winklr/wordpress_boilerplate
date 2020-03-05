@@ -202,8 +202,8 @@ let installWordPress = (webPort, settings) => {
 	let install = sh.exec([`${dockerCmd} wp core install`,
 		`--url=localhost:${webPort}`,
 		`--title="${settings.title}"`,
-		`--admin_user=${settings.wp.admin.user}`,
-		`--admin_password=${settings.wp.admin.pass}`,
+		`--admin_user="${settings.wp.admin.user}"`,
+		`--admin_password="${settings.wp.admin.pass}"`,
 		`--admin_email="${settings.wp.admin.email}"`].join(' '),
 		{silent: true, async: true});
 	install.stdout.on('data', data => {
