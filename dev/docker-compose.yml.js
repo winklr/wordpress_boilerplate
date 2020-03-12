@@ -7,7 +7,7 @@ services:
     container_name: ${settings.slug}_web
     restart: on-failure:5
     volumes:
-      - ./www:/var/www/html
+      - ./www:/var/www/html:delegated
       - ./provision/web/wordpress-fpm.conf:/etc/nginx/conf.d/default.conf
       - ./provision/web/global:/etc/nginx/global
     ports:
@@ -41,8 +41,9 @@ services:
     container_name: ${settings.slug}_wp
     restart: on-failure:5
     volumes:
-      - ./www:/var/www/html
-      - ./src:/var/www/src
+      - ./www:/var/www/html:delegated
+      - ./www/wp-content:/var/www/html/wp-content:consistent
+      - ./src/acf-json:/var/www/src/acf-json:consistent
       - ./provision/wp/zz-php.ini:/usr/local/etc/php/conf.d/zz-php.ini
       - './dbDump:/dbDump'
     environment:
@@ -79,9 +80,11 @@ services:
       - wp
       - db
     restart: on-failure:5
+    environment:
+      LANG: 'C.UTF-8'
     volumes:
       - ./www:/var/www/html
-      - ./src:/var/www/src
+      - ./src/acf-json:/var/www/src/acf-json
       - ~/.ssh:/root/.ssh
 volumes:
   database:

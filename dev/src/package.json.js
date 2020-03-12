@@ -7,7 +7,7 @@ module.exports = (settings) => `
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "expose-loader": "^0.7.5",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",

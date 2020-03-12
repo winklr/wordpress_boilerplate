@@ -15,6 +15,6 @@
     "jsx": "react"
   },
   "include": [
-    "**/*"
+    "assets/js/**/*"
   ]
 }

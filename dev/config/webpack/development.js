@@ -1,17 +1,15 @@
-const commonConfig = require('./base.js');
-const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
+const commonConfig = require('./base.js')
+const webpackMerge = require('webpack-merge')
+const webpack = require('webpack')
 
-module.exports = function (env) {
-    return webpackMerge(commonConfig(env), {
-        mode: 'development',
+module.exports = webpackMerge(commonConfig, {
+    mode: 'development',
 
-        devtool: 'source-map',
+    devtool: 'source-map',
 
-        plugins: [
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify('development')
-            })
-        ]
-    });
-};
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        })
+    ]
+})

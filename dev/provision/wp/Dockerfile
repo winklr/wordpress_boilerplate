@@ -20,9 +20,6 @@ RUN apt-get -qq -o=Dpkg::Use-Pty=0 install -y sendmail > /dev/null 2>&1
 # Install mysql client tools
 RUN apt-get install -y default-mysql-client
 
-# Install git
-# RUN apt-get install -y git
-
 # Cleanup
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

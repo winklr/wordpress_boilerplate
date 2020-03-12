@@ -3,7 +3,7 @@ module.exports = {
         'werk85/react',
     ],
     parserOptions: {
-        project: './src/tsconfig.json',
+        project: ['./tsconfig.json','./src/tsconfig.json'],
         ecmaFeatures: {
             jsx: true
         }

@@ -16,7 +16,7 @@
     "wp": "docker-compose exec -u www-data -T wp wp",
     "logs": "docker-compose logs -f --tail='46' wp | sed -e \"s/ WARNING: .* into stderr: \\\"\\(NOTICE: PHP message: \\)\\{0,1\\}\\(\\[[a-zA-Z0-9 :\\-]\\{1,\\}\\]\\)\\{0,1\\} \\{0,1\\}\\(.*\\)\\\"/ ⚠️  $(tput setaf 3)\\3$(tput sgr0)/\"",
     "remove": "docker-compose down --volumes --rmi local",
-    "build:production": "npm start -- build --production",
+    "build:production": "yarn start build --production",
     "wordmove:pull": "docker-compose run --rm wordmove pull -u -d -p -e staging",
     "wordmove:pull:production": "docker-compose run --rm wordmove pull -u -d -p -e production",
     "wordmove:push": "npm run build:production && docker-compose run --rm wordmove push -t -e staging",
