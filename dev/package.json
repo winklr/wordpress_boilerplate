@@ -22,7 +22,7 @@
     "wordmove:push": "npm run build:production && docker-compose run --rm wordmove push -t -e staging",
     "wordmove:push:production": "npm run build:production && docker-compose run --rm wordmove push -t -e production",
     "compose": "node ./scripts/dockerCompose.js",
-    "composer": "docker-compose exec -u www-data composer",
+    "composer": "docker-compose run --rm -u www-data composer",
     "init": "node ./scripts/init.js",
     "dbbackup": "node ./scripts/dbBackup.js",
     "dbimport": "node ./scripts/dbImport.js",

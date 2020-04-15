@@ -12,7 +12,7 @@ yargs
     })
     .command('latest', 'import latest database dump from /dbDump', () => {}, () => {
         const files = fs.readdirSync(process.cwd() + '/dbDump/');
-        const regex = /^.*(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)).sql$/;
+        const regex = /^.*(\d{4}-[01]\d-[0-3]\dT[0-2]\d[:_][0-5]\d[:_][0-5]\d\.\d+([+-][0-2]\d[:_][0-5]\d|Z)).sql$/;
 
         const dateFiles = reduce(files, (accu, filename) => {
             const dateString = regex.exec(filename);

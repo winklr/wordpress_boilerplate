@@ -7,9 +7,10 @@ module.exports = (settings) => {
 	"authors": [${JSON.stringify(author)}],
 	"require": {
 		"timber/timber":"1.*",
-		"Upstatement/routes": "*",
+		"upstatement/routes": "*",
 		"twig/extensions": "^1.5",
-		"symbioticwp/acf-field-post-type-selector": "1.0.0-p"
+		"symbioticwp/acf-field-post-type-selector": "1.0.0-p",
+		"tightenco/collect": "^7.3"
 	}
 }
 `};

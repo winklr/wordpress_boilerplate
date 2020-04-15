@@ -31,6 +31,7 @@ wp:
     - clean-image-filenames
     - acf-extended
     - permalinks-customizer
+    - classic-editor
 
 # Google Analytics - optional (will preset tracking code in theme, can be added manually later)
 # google_analytics_id:
