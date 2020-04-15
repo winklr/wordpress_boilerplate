@@ -28,7 +28,7 @@
     "commander": "^2.20.3",
     "findup-sync": "^3.0.0",
     "js-yaml": "^3.13.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.13",
     "promise": "^8.0.3",
     "shelljs": "^0.8.3"
   }
